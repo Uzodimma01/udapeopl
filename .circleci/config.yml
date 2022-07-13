@@ -102,7 +102,8 @@ jobs:
           name: Scan vulnerabilities in front-end app
           command: |
               cd backend
-              npm install && npm audit --audit-level=critical
+              npm install && npm install && npm audit fix --audit-level=critical --force && npm audit fix --audit-level=critical --force 
+              npm audit --audit-level=critical
 
   scan-backend:
     docker:
@@ -115,7 +116,8 @@ jobs:
           name: Scan vulnerabilities in back-end app
           command: |
               cd backend
-              npm install && npm audit --audit-level=critical
+              npm install && npm audit fix --audit-level=critical --force && npm audit fix --audit-level=critical --force
+              npm audit --audit-level=critical
 
 #   deploy-infrastructure:
 #     docker:
