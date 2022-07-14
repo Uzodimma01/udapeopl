@@ -17,7 +17,7 @@ commands:
             AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
             AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION
             aws cloudformation delete-stack --stack-name udapeople-backend-<<parameters.workflow_id>>
-            aws s3 rm s3://udapeople-<<parameters.workflow_id>> --recursive
+            aws cloudformation delete-stack --stack-name udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:5}
             
   revert_migration:
     description: Run Database Migration
@@ -142,7 +142,7 @@ jobs:
               --tags project=udapeople \
               --stack-name "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:5}" \
               --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:5}" 
-              echo ["$fingerprint"]
+              
       - run:
           name: Deploy front-end infrastructure
           command: |
@@ -154,7 +154,7 @@ jobs:
               --tags project=your-tag \
               --stack-name "udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:5}" \
               --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:5}"  
-              echo ["$fingerprint"]
+              
       - run:
           name: Add back-end ip to ansible inventory
           command: |
@@ -163,7 +163,7 @@ jobs:
             --query "Reservations[*].Instances[*].[PublicIpAddress]" \
             --output text >> ~/project/.circleci/ansible/inventory.txt
             cat ~/project/.circleci/ansible/inventory.txt
-            echo ["$fingerprint"]
+            
       - persist_to_workspace:
           root: ~/
           paths:
@@ -178,19 +178,18 @@ jobs:
     steps:
       - checkout
       - add_ssh_keys:
-          fingerprints: ["$fingerprint"]
+          fingerprints: ["f7:0d:4e:d3:45:e2:c0:e1:71:3c:aa:bd:ba:a2:0a:d9"]
       - attach_workspace:
             at: ~/
       - run:
           name: Install dependencies
           command: | 
-            echo ["$fingerprint"]
             apk add --update  ansible
             pip install awscli
       - run:
           name: Configure servers
           command: |
-            echo ["$fingerprint"]
+            
               cd .circleci/ansible
               ansible-playbook -i inventory.txt configure-server.yml
       - destroy-environment:
@@ -265,7 +264,7 @@ jobs:
     steps:
       - checkout
       - add_ssh_keys:
-          fingerprints: ["$fingerprint"]
+          fingerprints: ["f7:0d:4e:d3:45:e2:c0:e1:71:3c:aa:bd:ba:a2:0a:d9"]
       - attach_workspace:
             at: ~/
       - run:
