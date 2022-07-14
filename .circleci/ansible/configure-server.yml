@@ -13,7 +13,7 @@
     - ansible_stdout_callback: yaml
 
   pre_tasks:
-    -  name: Install dependencies
+    - name: Install dependencies
       command: | 
         echo "sleeping for 5 minutes to allow things to come up"
         sleep 300s
