@@ -192,7 +192,7 @@ jobs:
           command: |
             
               cd .circleci/ansible
-              ansible-playbook --user=ubuntu -i inventory.txt configure-server.yml
+              ansible-playbook -i inventory.txt configure-server.yml
       - destroy-environment:
           workflow_id: ${CIRCLE_WORKFLOW_ID:0:5}
 
