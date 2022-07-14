@@ -142,6 +142,8 @@ jobs:
               --tags project=udapeople \
               --stack-name "udapeople-backend-${CIRCLE_WORKFLOW_ID:0:5}" \
               --parameter-overrides ID="${CIRCLE_WORKFLOW_ID:0:5}" 
+            echo "sleeping for 5 minutes to allow things to come up"
+            sleep 240s
               
       - run:
           name: Deploy front-end infrastructure
