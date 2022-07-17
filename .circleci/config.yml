@@ -257,10 +257,10 @@ jobs:
           paths:
             - project/.circleci/ansible/*
             
-      - destroy-environment:
-          workflow_id: ${CIRCLE_WORKFLOW_ID:0:5}
-      - revert_migration:
-            workflow_id: ${CIRCLE_WORKFLOW_ID:0:5}
+      # - destroy-environment:
+      #     workflow_id: ${CIRCLE_WORKFLOW_ID:0:5}
+      # - revert_migration:
+      #       workflow_id: ${CIRCLE_WORKFLOW_ID:0:5}
       
 
   deploy-backend:
@@ -293,10 +293,7 @@ jobs:
             echo "Contents  of the inventory.txt file is ------"
             cat inventory.txt
             ansible-playbook -i inventory.txt deploy-backend.yml
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - project/.circleci/ansible/*
+
       # - destroy-environment:
       #     workflow_id: ${CIRCLE_WORKFLOW_ID:0:5}
       # - revert_migration:
